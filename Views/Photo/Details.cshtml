@@ -1,0 +1,99 @@
+﻿@model _5204_Passion_Project_n01442368_v2.Models.ViewModels.DetailPhoto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Photo Details</h2>
+
+<div>
+    <hr />
+    <div>
+        @Html.ActionLink("Delete", "DeleteConfirm", new { id = Model.Photo.PhotoID })
+    </div>
+    <dl class="dl-horizontal">
+        <dt>
+            Film
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Film.BrandName)
+            @Html.DisplayFor(model => model.Film.FilmSeries)
+            @Html.DisplayFor(model => model.Film.BoxSpeed)
+        </dd>
+
+        <dt>
+            Lens
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lens.BrandName)
+            @Html.DisplayFor(model => model.Lens.LensInfo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Photo.ISO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Photo.ISO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Photo.Aperture)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Photo.Aperture)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Photo.ShutterSpeed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Photo.ShutterSpeed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Photo.FocalLength_mm)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Photo.FocalLength_mm)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Photo.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Photo.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Photo.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Photo.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Photo.DateTaken)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Photo.DateTaken)
+        </dd>
+
+    </dl>
+</div>
+<div>
+    <ul class="links">
+        <li class="link-item">@Html.ActionLink("Back to List", "List")</li>
+        <li class="link-item">@Html.ActionLink("Edit", "Edit", new { id = Model.Photo.PhotoID })</li>
+    </ul>
+</div>
+
+

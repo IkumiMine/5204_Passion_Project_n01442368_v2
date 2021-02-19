@@ -1,0 +1,119 @@
+﻿@model _5204_Passion_Project_n01442368_v2.Models.ViewModels.UpdatePhoto
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create Photo</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Photo.FilmID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select id="Photo_FilmID" name="FilmID">
+                @foreach (var Film in Model.AllFilms)
+                {
+                    <option value="@Film.FilmID">@Film.BrandName @Film.FilmSeries @Film.BoxSpeed</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="add-film">
+        @Html.ActionLink("Add A New Film", "Create", "Film")
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Photo.LensID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <select id="Photo_LensID" name="LensID">
+                @foreach (var Lens in Model.AllLenses)
+                {
+                    <option value="@Lens.LensID">@Lens.BrandName @Lens.LensInfo</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="add-lens">
+        @Html.ActionLink("Add A New Lens", "Create", "Lens")
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Photo.ISO, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Photo.ISO, new { htmlAttributes = new { @class = "form-control", Name = "ISO" } })
+            @Html.ValidationMessageFor(model => model.Photo.ISO, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Photo.Aperture, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Photo.Aperture, new { htmlAttributes = new { @class = "form-control", Name = "Aperture" } })
+            @Html.ValidationMessageFor(model => model.Photo.Aperture, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Photo.ShutterSpeed, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Photo.ShutterSpeed, new { htmlAttributes = new { @class = "form-control", Name = "ShutterSpeed" } })
+            @Html.ValidationMessageFor(model => model.Photo.ShutterSpeed, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Photo.FocalLength_mm, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Photo.FocalLength_mm, new { htmlAttributes = new { @class = "form-control", Name = "FocalLength_mm" } })
+            @Html.ValidationMessageFor(model => model.Photo.FocalLength_mm, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Photo.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Photo.Title, new { htmlAttributes = new { @class = "form-control", Name = "Title" } })
+            @Html.ValidationMessageFor(model => model.Photo.Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Photo.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Photo.Description, new { htmlAttributes = new { @class = "form-control", Name = "Description" } })
+            @Html.ValidationMessageFor(model => model.Photo.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Photo.DateTaken, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Photo.DateTaken, new { htmlAttributes = new { @class = "form-control", Name = "DateTaken" } })
+            @Html.ValidationMessageFor(model => model.Photo.DateTaken, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "List")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

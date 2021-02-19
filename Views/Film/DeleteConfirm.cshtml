@@ -1,0 +1,50 @@
+﻿@model _5204_Passion_Project_n01442368_v2.Models.FilmDto
+
+@{
+    ViewBag.Title = "DeleteConfirm";
+}
+
+<h2>Delete Film</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+@using (Html.BeginForm("Delete", "Film", new { id = Model.FilmID }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-default" />
+    </div>
+}
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BrandName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BrandName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FilmSeries)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FilmSeries)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BoxSpeed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BoxSpeed)
+        </dd>
+
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "List")
+</div>
+

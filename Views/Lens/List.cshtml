@@ -1,0 +1,46 @@
+﻿@model IEnumerable<_5204_Passion_Project_n01442368_v2.Models.LensDto>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>Lens List</h2>
+
+<div class="create-link">
+    @Html.ActionLink("Create A New Lens", "Create")
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BrandName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LensInfo)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BrandName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LensInfo)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.LensID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.LensID })
+            </td>
+        </tr>
+    }
+
+</table>
+<div>
+    <ul class="links">
+        <li class="link-item">@Html.ActionLink("Go to Photo List", "List", "Photo")</li>
+        <li class="link-item">@Html.ActionLink("Go to Film List", "List" , "Film")</li>
+    </ul>
+</div>
+

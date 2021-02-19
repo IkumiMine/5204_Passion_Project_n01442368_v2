@@ -1,0 +1,74 @@
+﻿@model IEnumerable<_5204_Passion_Project_n01442368_v2.Models.PhotoDto>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>Photo List</h2>
+
+<div class="create-link">@Html.ActionLink("Create A New Photo", "Create")</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ISO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Aperture)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ShutterSpeed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FocalLength_mm)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateTaken)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ISO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aperture)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShutterSpeed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FocalLength_mm)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTaken) 
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.PhotoID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.PhotoID })
+            </td>
+        </tr>
+    }
+
+</table>
+<div>
+    <ul class="links">
+        <li class="link-item">@Html.ActionLink("Go to Film List", "List", "Film")</li>
+        <li class="link-item">@Html.ActionLink("Go to Lens List", "List", "Lens")</li>
+    </ul>
+</div>
+

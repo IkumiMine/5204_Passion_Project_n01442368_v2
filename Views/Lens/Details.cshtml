@@ -1,0 +1,39 @@
+﻿@model _5204_Passion_Project_n01442368_v2.Models.LensDto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Lens Details</h2>
+
+<div>
+    <hr />
+    <div>
+        @Html.ActionLink("Delete", "DeleteConfirm", new { id = Model.LensID })
+    </div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BrandName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BrandName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LensInfo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LensInfo)
+        </dd>
+
+    </dl>
+</div>
+<div>
+    <ul class="links">
+        <li class="link-item">@Html.ActionLink("Back to List", "List")</li>
+        <li class="link-item">@Html.ActionLink("Edit", "Edit", new { id = Model.LensID })</li>
+    </ul>
+</div>
+

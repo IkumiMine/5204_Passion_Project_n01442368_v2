@@ -1,0 +1,47 @@
+﻿@model _5204_Passion_Project_n01442368_v2.Models.FilmDto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Film Details</h2>
+
+<div>
+    <hr />
+    <div>
+        @Html.ActionLink("Delete", "DeleteConfirm", new { id = Model.FilmID })
+    </div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BrandName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BrandName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FilmSeries)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FilmSeries)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BoxSpeed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BoxSpeed)
+        </dd>
+
+    </dl>
+</div>
+<div>
+    <ul class="links">
+        <li class="link-item">@Html.ActionLink("Back to List", "List")</li>
+        <li class="link-item">@Html.ActionLink("Edit", "Edit", new { id = Model.FilmID })</li>
+    </ul>
+</div>
+
