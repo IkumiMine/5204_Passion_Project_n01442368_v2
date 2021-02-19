@@ -3,7 +3,7 @@ This is MVP of Passion Project
 
 ## Code reference
 Professor Christine Bittle
-varsity_mvp : https://github.com/christinebittle/varsity_mvp
+- varsity_mvp : https://github.com/christinebittle/varsity_mvp
 
 ## Project Information
 This application will allow a user to keep record the photo information.
