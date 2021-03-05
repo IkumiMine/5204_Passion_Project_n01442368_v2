@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -34,5 +35,24 @@ namespace _5204_Passion_Project_n01442368_v2.Models
         public DbSet<Film> Films { get; set; }
         public DbSet<Lens> Lenses { get; set; }
         public DbSet<Photo> Photos { get; set; }
+
+        //Turn off cascade delete
+        //https://www.learnentityframeworkcore.com/configuration/one-to-many-relationship-configuration
+        //https://www.entityframeworktutorial.net/code-first/cascade-delete-in-code-first.aspx
+        /*protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            //base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Photo>()
+                .HasRequired(p => p.Film)
+                .WithMany(f => f.Photos)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Photo>()
+                .HasRequired(p => p.Lens)
+                .WithMany(l => l.Photos)
+                .WillCascadeOnDelete(false);
+        }*/
+
     }
 }

@@ -1,0 +1,77 @@
+﻿dl dt,
+dl dd {
+    margin-bottom: 3px;
+}
+/* links */
+/*
+.add-film,
+.add-lens {
+    position: absolute;
+    left: 45%;
+}
+.add-film {
+    top: 22.5%;
+}
+.add-lens {
+    top: 29.5%;
+}
+*/
+.create-link {
+    margin-bottom: 10px;
+}
+/* Home */
+#home-container {
+    margin: 20px 0 50px 0;
+}
+.menu-item {
+    width: 20%;
+    margin-bottom: 10px;
+}
+.home-sentence {
+    margin-top: 40px;
+}
+/* Photo List */
+.filter-list {
+    width: 50%;
+}
+.photo-container {
+    overflow: hidden;
+}
+.photo-list {
+    transition: transform .3s;
+    width: 100%;
+}
+.photo-outside:nth-child(3n+3) {
+    padding-right: 0;
+}
+.photo-list:hover {
+    transform: scale(1.2);
+}
+/* Photo Detail*/
+.photo-detail {
+    margin-bottom: 15px;
+    width: 100%;
+}
+@media only screen and (max-width:1200px){
+    .photo-outside:nth-child(3n+3) {
+        padding-right: 1.5%;
+    }
+    .photo-outside:nth-child(2n+2) {
+        padding-right: 0;
+    }
+}
+@media only screen and (max-width:769px) {
+    .photo-outside:nth-child(2n+2) {
+        padding-right: 1.5%;
+    }
+    .photo-outside:nth-child(5n+5) {
+        padding-right: 1.5%;
+    }
+}
+
+@media only screen and (max-width:426px){
+    .menu-item {
+        width: 50%;
+    }
+}
+

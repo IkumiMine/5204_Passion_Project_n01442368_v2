@@ -1,74 +1,57 @@
-﻿@model IEnumerable<_5204_Passion_Project_n01442368_v2.Models.PhotoDto>
+﻿@model _5204_Passion_Project_n01442368_v2.Models.ViewModels.ListViewModel
 
 @{
     ViewBag.Title = "List";
 }
 
-<h2>Photo List</h2>
+<h2>Photo</h2>
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6">
+        @using (Html.BeginForm("List", "Photo", FormMethod.Get))
+        {
 
-<div class="create-link">@Html.ActionLink("Create A New Photo", "Create")</div>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ISO)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Aperture)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ShutterSpeed)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FocalLength_mm)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateTaken)
-        </th>
-        <th></th>
-    </tr>
+            <div class="input-group filter-list">
+                <select name="filmid" id="filmid" class="form-control">
+                    <option value="0">All</option>
+                    @foreach (var Film in Model.AllFilms)
+                    {
+                        <option value="@Film.FilmID">@Film.BrandName @Film.FilmSeries @Film.BoxSpeed</option>
+                    }
+                </select>
+                <span class="input-group-btn">
+                    <input type="submit" value="Filter" class="btn btn-default" />
+                </span>
+            </div>
+        }
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="create-link pull-right">@Html.ActionLink("Add Photo", "Create", null, new { @class = "btn btn-primary" })</div>
+    </div>
+</div>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ISO)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Aperture)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShutterSpeed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FocalLength_mm)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateTaken) 
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.PhotoID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.PhotoID })
-            </td>
-        </tr>
-    }
 
-</table>
-<div>
-    <ul class="links">
-        <li class="link-item">@Html.ActionLink("Go to Film List", "List", "Film")</li>
-        <li class="link-item">@Html.ActionLink("Go to Lens List", "List", "Lens")</li>
-    </ul>
+<div class="container-fluid">
+    <div class="row">
+        @foreach (var Photo in Model.AllPhotos)
+        {
+
+            string filesrc = "/Content/Photos/default.png";
+            string alt = "No photo is uploaded";
+
+            if (Photo.IsPhoto)
+            {
+                filesrc = "/Content/Photos/" + Photo.PhotoID + "." + Photo.PhotoExtension;
+                alt = "Photo of " + Photo.Title;
+            }
+            <div class="col-lg-4 col-md-6 col-sm-12 photo-outside">
+                <div class="photo-container">
+                    <a href="@Url.Action("Details", "Photo", new { id = Photo.PhotoID })">
+                        <img class="photo-list" src="@filesrc" alt="@alt" />
+                    </a>
+                </div>
+                <p>@Photo.Title: @Photo.Description</p>
+            </div>
+        }
+    </div>
 </div>
 

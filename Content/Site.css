@@ -17,23 +17,11 @@
 }
 .dl-horizontal {
     font-size: 16px;
+    padding: 20px 0 0 50px;
 }
-
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
     max-width: 280px;
 }
-/*links*/
-.links { list-style-type: none; }
-.link-item { display: inline-block; }
-.link-item:not(:last-child) { margin-right: 70px; }
-.create-link { margin-bottom: 20px; }
-.add-film, 
-.add-lens {
-    position: absolute;
-    left: 35%;
-}
-.add-film { top: 21.5%; }
-.add-lens { top: 27.5%; }

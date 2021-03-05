@@ -117,3 +117,5 @@ C:\Users\ikumi\Desktop\5204_Passion_Project_n01442368_v2\obj\Debug\5204_Passion_
 C:\Users\ikumi\Desktop\5204_Passion_Project_n01442368_v2\obj\Debug\_5204_Passion_Project_n01442368_v2.Migrations._20210216.resources
 C:\Users\ikumi\Desktop\5204_Passion_Project_n01442368_v2\obj\Debug\_5204_Passion_Project_n01442368_v2.Migrations.Editdisplayformat.resources
 C:\Users\ikumi\Desktop\5204_Passion_Project_n01442368_v2\obj\Debug\_5204_Passion_Project_n01442368_v2.Migrations.modifieddisplayname.resources
+C:\Users\ikumi\Desktop\5204_Passion_Project_n01442368_v2\obj\Debug\_5204_Passion_Project_n01442368_v2.Migrations._20210301.resources
+C:\Users\ikumi\Desktop\5204_Passion_Project_n01442368_v2\obj\Debug\_5204_Passion_Project_n01442368_v2.Migrations._20210301v2.resources

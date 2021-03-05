@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Web;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -12,6 +14,7 @@ using _5204_Passion_Project_n01442368_v2.Models;
 using _5204_Passion_Project_n01442368_v2.Models.ViewModels;
 using System.Diagnostics;
 
+
 namespace _5204_Passion_Project_n01442368_v2.Controllers
 {
     public class PhotoDataController : ApiController
@@ -19,24 +22,40 @@ namespace _5204_Passion_Project_n01442368_v2.Controllers
         private PassionProjectv2DbContext db = new PassionProjectv2DbContext();
 
         /// <summary>
-        /// This will return a list of photo in the database
+        /// This will return a list of photos in the database. If the filmID is selected, it will return a list of photos associated with the filmID.
         /// </summary>
+        /// <param name="filmid">FilmID</param>
         /// <returns>
-        /// A list of photo including photoID, ISO, aperture, shutter speed, focal length(mm), title, description, date taken, filmID, lensID
+        /// A list of photos with images.
         /// </returns>
         /// <example>
-        /// GET: api/PhotoData/GetPhotos
+        /// GET: api/PhotoData/GetPhotos/{filmid?}
         /// </example>
+        [HttpGet]
+        [Route("api/PhotoData/GetPhotos/{filmid?}")]
         [ResponseType(typeof(IEnumerable<PhotoDto>))]
-        public IHttpActionResult GetPhotos()
+        public IHttpActionResult GetPhotos(int filmid = 0)
         {
             List<Photo> Photos = db.Photos.ToList();
+
+            //Filter result if filmID is set
+            if (filmid != 0)
+            {
+                Photos = Photos.Where(p => p.FilmID == Convert.ToInt32(filmid)).ToList();
+
+            }
+
             List<PhotoDto> PhotoDtos = new List<PhotoDto> { };
+
+            if (Photos == null)
+            {
+                return NotFound();
+            }
 
             //Information which I would like to retrieve to the API
             foreach (var Photo in Photos)
             {
-                PhotoDto NewPhoto = new PhotoDto
+            PhotoDto NewPhoto = new PhotoDto
                 {
                     PhotoID = Photo.PhotoID,
                     ISO = Photo.ISO,
@@ -46,6 +65,8 @@ namespace _5204_Passion_Project_n01442368_v2.Controllers
                     Title = Photo.Title,
                     Description = Photo.Description,
                     DateTaken = Photo.DateTaken,
+                    IsPhoto = Photo.IsPhoto,
+                    PhotoExtension = Photo.PhotoExtension,
                     FilmID = Photo.FilmID,
                     LensID = Photo.LensID
                 };
@@ -100,6 +121,7 @@ namespace _5204_Passion_Project_n01442368_v2.Controllers
         public IHttpActionResult GetLensForPhoto(int id)
         {
             Lens Lens = db.Lenses.Where(l => l.Photos.Any(p => p.PhotoID == id)).FirstOrDefault();
+
             if (Lens == null)
             {
                 return NotFound();
@@ -119,7 +141,7 @@ namespace _5204_Passion_Project_n01442368_v2.Controllers
         /// </summary>
         /// <param name="id">PhotoID</param>
         /// <returns>
-        /// A specific photo information including photoID, ISO, aperture, shutter speed, focal length(mm), title, description, date taken, filmID, lensID
+        /// A specific photo information including photoID, ISO, aperture, shutter speed, focal length(mm), title, description, date taken, if a photo file is uploaded(boolean), a photo file extension if it exists, filmID, lensID
         /// </returns>
         /// <example>
         /// GET: api/PhotoData/FindPhoto/5 
@@ -146,6 +168,8 @@ namespace _5204_Passion_Project_n01442368_v2.Controllers
                 Title = Photo.Title,
                 Description = Photo.Description,
                 DateTaken = Photo.DateTaken,
+                IsPhoto = Photo.IsPhoto,
+                PhotoExtension = Photo.PhotoExtension,
                 FilmID = Photo.FilmID,
                 LensID = Photo.LensID
             };
@@ -178,6 +202,9 @@ namespace _5204_Passion_Project_n01442368_v2.Controllers
             }
 
             db.Entry(photo).State = EntityState.Modified;
+            //Photo updata is handled by another method
+            db.Entry(photo).Property(p => p.IsPhoto).IsModified = false;
+            db.Entry(photo).Property(p => p.PhotoExtension).IsModified = false;
 
             try
             {
@@ -196,6 +223,78 @@ namespace _5204_Passion_Project_n01442368_v2.Controllers
             }
 
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        /// <summary>
+        /// This will update a specific photo information in the database
+        /// </summary>
+        /// <param name="id">PhotoID</param>
+        /// <param name="lens">A photo object</param>
+        /// <returns></returns>
+        /// <example>
+        /// POST: api/PhotoData/UpdatePhoto/5 
+        /// </example>
+        /// FORM DATA: Photo JSON Object
+        [HttpPost]
+        public IHttpActionResult UpdatePhotoFile(int id)
+        {
+            bool isphoto = false;
+            string photoextension;
+            if (Request.Content.IsMimeMultipartContent())
+            {
+                Debug.WriteLine("Received multipart form data");
+
+                int numfiles = HttpContext.Current.Request.Files.Count;
+                Debug.WriteLine("Files Received: " + numfiles);
+
+                //Check if a file is posted
+                if(numfiles == 1 && HttpContext.Current.Request.Files[0] != null)
+                {
+                    var PhotoFile = HttpContext.Current.Request.Files[0];
+                    //Check if the file is empty
+                    if(PhotoFile.ContentLength > 0)
+                    {
+                        var valtypes = new[] { "jpeg", "jpg", "png", "gif" };
+                        var extension = Path.GetExtension(PhotoFile.FileName).Substring(1);
+                        //Check the extension of the file
+                        if (valtypes.Contains(extension))
+                        {
+                            try
+                            {
+                                //File name is the id of the photo file
+                                string filename = id + "." + extension;
+
+                                //Get a direct file path to ~/Content/Photos/{id}.{extension}
+                                string path = Path.Combine(HttpContext.Current.Server.MapPath("~/Content/Photos/"), filename);
+
+                                //Save the file
+                                PhotoFile.SaveAs(path);
+
+                                //If these are all successful then we can set these fields
+                                isphoto = true;
+                                photoextension = extension;
+
+                                //Update the photo isfile and photoextension fields in the database
+                                Photo SelectedPhoto = db.Photos.Find(id);
+                                SelectedPhoto.IsPhoto = isphoto;
+                                SelectedPhoto.PhotoExtension = photoextension;
+                                db.Entry(SelectedPhoto).State = EntityState.Modified;
+
+                                db.SaveChanges();
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine("A photo file was nor saved successfully.");
+                                Debug.WriteLine("Exception:" + ex);
+                            }
+                        }
+
+                    }
+                    
+                }
+            }
+
+            return Ok();
         }
 
         /// <summary>
@@ -261,7 +360,7 @@ namespace _5204_Passion_Project_n01442368_v2.Controllers
         /// <summary>
         /// This will check if a specific photo exists in the system. Internal use only
         /// </summary>
-        /// <param name="id">LensID</param>
+        /// <param name="id">PhotoID</param>
         /// <returns>It will return true if a photo exists. It will return false, if not.</returns>
         private bool PhotoExists(int id)
         {

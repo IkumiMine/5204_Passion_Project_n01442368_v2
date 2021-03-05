@@ -4,11 +4,9 @@
     ViewBag.Title = "List";
 }
 
-<h2>Film List</h2>
+<h2>Film</h2>
 
-<div class="create-link">
-    @Html.ActionLink("Create A New Film", "Create")
-</div>
+<div class="create-link pull-right">@Html.ActionLink("Add Film", "Create", null, new { @class = "btn btn-primary" })</div>
 <table class="table">
     <tr>
         <th>
@@ -36,18 +34,12 @@
                 @Html.DisplayFor(modelItem => item.BoxSpeed)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.FilmID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.FilmID })
+                @Html.ActionLink("Edit", "Edit", new { id = item.FilmID }) 
             </td>
         </tr>
     }
 
 </table>
-<div>
-    <ul class="links">
-        <li class="link-item">@Html.ActionLink("Go to Photo List", "List", "Photo")</li>
-        <li class="link-item">@Html.ActionLink("Go to Lens List", "List", "Lens")</li>
-    </ul>
-</div>
+
 
 

@@ -32,14 +32,45 @@ namespace _5204_Passion_Project_n01442368_v2.Controllers
         }
 
         // GET: Photo/List
-        public ActionResult List()
+        public ActionResult List(int filmid=0)
         {
-            string url = "photodata/getphotos";
-            HttpResponseMessage response = client.GetAsync(url).Result;
+            ListViewModel ViewModel = new ListViewModel();
+
+                string url = "photodata/getphotos";
+                //Debug.WriteLine(ViewModel.Photo);
+                HttpResponseMessage response = client.GetAsync(url).Result;
+                //Debug.WriteLine(response);
+
+                //Get film data and assign ViewModel.AllFilms
+                string urlFilm = "filmdata/getfilms";
+                HttpResponseMessage responseFilm = client.GetAsync(urlFilm).Result;
+
             if (response.IsSuccessStatusCode)
             {
+                //if film id is selected, filter photo
+                //if not, return all photos
+                if(filmid != 0)
+                {
+                    url = "photodata/getphotos?filmid=" + filmid;
+                    response = client.GetAsync(url).Result;   
+
+                } else {
+
+                    url = "photodata/getphotos";
+                    response = client.GetAsync(url).Result;
+          
+                }
+
+                //Put data into photo data transfer object
+                Debug.WriteLine(response);
                 IEnumerable<PhotoDto> SelectedPhotos = response.Content.ReadAsAsync<IEnumerable<PhotoDto>>().Result;
-                return View(SelectedPhotos);
+                ViewModel.AllPhotos = SelectedPhotos;
+
+                IEnumerable<FilmDto> PotentialFilms = responseFilm.Content.ReadAsAsync<IEnumerable<FilmDto>>().Result;
+                ViewModel.AllFilms = PotentialFilms;
+
+                return View(ViewModel);
+
             }
             else
             {
@@ -162,17 +193,30 @@ namespace _5204_Passion_Project_n01442368_v2.Controllers
         // POST: Photo/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken()]
-        public ActionResult Edit(int id, Photo PhotoInfo)
+        public ActionResult Edit(int id, Photo PhotoInfo, HttpPostedFileBase PhotoFile)
         {
             string url = "photodata/updatephoto/" + id;
             Debug.WriteLine(jss.Serialize(PhotoInfo));
             HttpContent content = new StringContent(jss.Serialize(PhotoInfo));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             HttpResponseMessage response = client.PostAsync(url, content).Result;
-            Debug.WriteLine(response);
+            Debug.WriteLine(PhotoFile);
             if (response.IsSuccessStatusCode)
             {
+                //Only attempt to send photo file data if we have it
+                if(PhotoFile != null)
+                {
+                    Debug.WriteLine("Update photo file method");
+                    //Send over photo file data
+                    url = "photodata/updatephotofile/" + id;
+                    Debug.WriteLine(PhotoFile.FileName);
 
+
+                    MultipartFormDataContent requestcontent = new MultipartFormDataContent();
+                    HttpContent filecontent = new StreamContent(PhotoFile.InputStream);
+                    requestcontent.Add(filecontent, "PhotoFile", PhotoFile.FileName);
+                    response = client.PostAsync(url, requestcontent).Result;
+                }
                 return RedirectToAction("Details", new { id = id });
             }
             else

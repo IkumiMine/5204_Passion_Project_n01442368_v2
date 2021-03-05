@@ -12,87 +12,104 @@
     @Html.AntiForgeryToken()
 
     <div class="form-actions no-color">
-        <input type="submit" value="Delete" class="btn btn-default" />
+        <input type="submit" value="Delete" class="btn btn-warning" />
     </div>
 }
 <div>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Film
-        </dt>
+    <div class="row">
+        <div class="col-md-6">
+            <dl class="dl-horizontal">
+                <dt>
+                    Film
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Film.BrandName)
-            @Html.DisplayFor(model => model.Film.FilmSeries)
-            @Html.DisplayFor(model => model.Film.BoxSpeed)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Film.BrandName)
+                    @Html.DisplayFor(model => model.Film.FilmSeries)
+                    @Html.DisplayFor(model => model.Film.BoxSpeed)
+                </dd>
 
-        <dt>
-            Lens
-        </dt>
+                <dt>
+                    Lens
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Lens.BrandName)
-            @Html.DisplayFor(model => model.Lens.LensInfo)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Lens.BrandName)
+                    @Html.DisplayFor(model => model.Lens.LensInfo)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Photo.ISO)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Photo.ISO)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Photo.ISO)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Photo.ISO)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Photo.Aperture)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Photo.Aperture)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Photo.Aperture)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Photo.Aperture)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Photo.ShutterSpeed)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Photo.ShutterSpeed)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Photo.ShutterSpeed)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Photo.ShutterSpeed)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Photo.FocalLength_mm)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Photo.FocalLength_mm)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Photo.FocalLength_mm)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Photo.FocalLength_mm)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Photo.Title)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Photo.Title)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Photo.Title)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Photo.Title)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Photo.Description)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Photo.Description)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Photo.Description)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Photo.Description)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Photo.DateTaken)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Photo.DateTaken)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Photo.DateTaken)
-        </dd>
-    </dl>
+                <dd>
+                    @Html.DisplayFor(model => model.Photo.DateTaken)
+                </dd>
+            </dl>
+        </div>
+        <div class="col-md-6">
+            @{
+                string filesrc = "/Content/Photos/default.png";
+                string alt = "No photo is uploaded";
+
+                if (Model.Photo.IsPhoto)
+                {
+                    filesrc = "/Content/Photos/" + Model.Photo.PhotoID + "." + Model.Photo.PhotoExtension;
+                    alt = "Photo of " + Model.Photo.Title;
+                }
+            }
+            <img src="@filesrc" alt="@alt" height="300" />
+        </div>
+    </div>
 </div>
 <div>
     @Html.ActionLink("Back to List", "List")

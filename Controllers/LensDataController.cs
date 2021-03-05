@@ -86,7 +86,7 @@ namespace _5204_Passion_Project_n01442368_v2.Controllers
         /// <example>
         /// POST: api/LensData/UpdateLens/5 
         /// </example>
-        /// FORM DATA: Film JSON Object
+        /// FORM DATA: Lens JSON Object
         [HttpPost]
         [ResponseType(typeof(void))]
         public IHttpActionResult UpdateLens(int id, [FromBody] Lens lens)

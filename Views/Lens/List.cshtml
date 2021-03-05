@@ -4,11 +4,9 @@
     ViewBag.Title = "List";
 }
 
-<h2>Lens List</h2>
+<h2>Lens</h2>
 
-<div class="create-link">
-    @Html.ActionLink("Create A New Lens", "Create")
-</div>
+<div class="create-link pull-right">@Html.ActionLink("Add Lens", "Create", null, new { @class = "btn btn-primary" })</div>
 <table class="table">
     <tr>
         <th>
@@ -30,17 +28,11 @@
                 @Html.DisplayFor(modelItem => item.LensInfo)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.LensID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.LensID })
+                @Html.ActionLink("Edit", "Edit", new { id = item.LensID }) 
             </td>
         </tr>
     }
 
 </table>
-<div>
-    <ul class="links">
-        <li class="link-item">@Html.ActionLink("Go to Photo List", "List", "Photo")</li>
-        <li class="link-item">@Html.ActionLink("Go to Film List", "List" , "Film")</li>
-    </ul>
-</div>
+
 
