@@ -56,7 +56,9 @@ namespace _5204_Passion_Project_n01442368_v2.Models
         public bool IsPhoto { get; set; }
         public string PhotoExtension { get; set; }
 
+        [DisplayName("Film")]
         public int FilmID { get; set; }
+        [DisplayName("Lens")]
         public int LensID { get; set; }
     }
 }
