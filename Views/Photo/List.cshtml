@@ -6,12 +6,12 @@
 
 <h2>Photo</h2>
 <div class="row">
-    <div class="col-lg-6 col-md-6 col-sm-6">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
         @using (Html.BeginForm("List", "Photo", FormMethod.Get))
         {
 
             <div class="input-group filter-list">
-                <select name="filmid" id="filmid" class="form-control">
+                <select name="filmid" id="filmid" class="form-control filter-select">
                     <option value="0">All</option>
                     @foreach (var Film in Model.AllFilms)
                     {
@@ -23,35 +23,35 @@
                 </span>
             </div>
         }
-    </div>
-    <div class="col-lg-6 col-md-6 col-sm-6">
-        <div class="create-link pull-right">@Html.ActionLink("Add Photo", "Create", null, new { @class = "btn btn-primary" })</div>
+    </div> 
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        @Html.ActionLink("Add Photo", "Create", null, new { @class = "btn btn-primary create-link" })
     </div>
 </div>
 
 
-<div class="container-fluid">
-    <div class="row">
-        @foreach (var Photo in Model.AllPhotos)
+
+<div class="photo-output">
+    @foreach (var Photo in Model.AllPhotos)
+    {
+
+        string filesrc = "/Content/Photos/default.png";
+        string alt = "No photo is uploaded";
+
+        if (Photo.IsPhoto)
         {
-
-            string filesrc = "/Content/Photos/default.png";
-            string alt = "No photo is uploaded";
-
-            if (Photo.IsPhoto)
-            {
-                filesrc = "/Content/Photos/" + Photo.PhotoID + "." + Photo.PhotoExtension;
-                alt = "Photo of " + Photo.Title;
-            }
-            <div class="col-lg-4 col-md-6 col-sm-12 photo-outside">
-                <div class="photo-container">
-                    <a href="@Url.Action("Details", "Photo", new { id = Photo.PhotoID })">
-                        <img class="photo-list" src="@filesrc" alt="@alt" />
-                    </a>
-                </div>
-                <p>@Photo.Title: @Photo.Description</p>
-            </div>
+            filesrc = "/Content/Photos/" + Photo.PhotoID + "." + Photo.PhotoExtension;
+            alt = "Photo of " + Photo.Title;
         }
-    </div>
+        <div class="photo-container">
+            <div class="photo">
+                <a href="@Url.Action("Details", "Photo", new { id = Photo.PhotoID })">
+                    <img class="photo-file" src="@filesrc" alt="@alt" />
+                </a>
+            </div>
+            <p>@Photo.Title: @Photo.Description</p>
+        </div>
+    }
 </div>
+
 
